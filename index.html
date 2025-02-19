@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <script  >
+        const apiKey = "8b718b4d2935b7625fe3a17cf8ced283";
+function getweather(){
+    const city= document.getElementById("cityInput").value;
+    const weathershow=document.getElementById("p");
+    if(city===""){
+        weathershow.innerHTML="<p> Please Enter A City</P>";
+        return;
+    }
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+fetch(url)
+.then((response=>response.json()))
+.then((data)=>{
+    console.log(data);
+    if(data.cod=="404"){
+        weathershow.innerHTML="<p> city not found </p>";
+
+    }
+    else{
+        weathershow.innerHTML=`<h2> ${data.name},${data.sys.country}</h2>
+        <h3> Temperature:${data.main.temp}</h3>`;
+    }
+})
+.catch((error)=>{
+    weathershow.innerHTML="<p> Error</p>";
+})
+    
+}
+    </script>
+    <style>
+        div{
+            text-align: center;
+            border: none;
+            height: 250px;
+            background-color: rgba(0, 128, 0, 0.6);
+            width: 500px;
+            border-radius: 20px;
+            margin: 200px 0 0 500px;
+            border: 5px solid black;
+            box-shadow: 10px 10px ;
+            
+
+        }
+        input{
+            width: 200px;
+            border: none;
+            border-radius: 5px;
+            height: 35px;
+            
+        }
+        button{
+            width: 100px;
+            border: none;
+            border-radius: 5px;
+            height: 35px;
+            background-color: #0066ff;
+            color: white;
+        }
+        body{
+            background-color: rgba(0, 255, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div >
+        <br>
+        <h1>Weather forcast</h1>
+        <br>
+        <input type="text" name="" id="cityInput" placeholder="Enter City">
+        
+        <button onclick="getweather()">
+            Get Weather
+        </button>
+        <br>
+        <p id="p" class="weather-details" ></p>
+    </div>
+</body>
+</html>
